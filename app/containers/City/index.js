@@ -84,28 +84,25 @@ export class City extends React.Component { // eslint-disable-line react/prefer-
     let mainContent = (!loaded && !forecast) ? (<NoForecast />) : (<Loading />);
 
     if( forecast ) {
-      // console.log(forecast.forecast.simpleforecast);
-      const simpleforecast = forecast.forecast.simpleforecast;
-      const forescastObj = simpleforecast.forecastday;
-
+      // const simpleforecast = (simpleforecast) ? forecast.forecast.simpleforecast : '';
       mainContent = (
         <div>
-          <CitysInfoToday  {...forescastObj[0]} {...conditions} />
-          <CitysForecast forescast={forescastObj} />
+          <CitysInfoToday  {...forecast.forecast.simpleforecast.forecastday[0]} {...conditions} />
+          <CitysForecast forescast={forecast.forecast.simpleforecast.forecastday} />
         </div>
       );
     }
 
     return(
-
       <div className={`${styles.wwCard} weather-widget--card`}>
         {!editing && (<input className={`${styles.select} weather-widget--search`} onFocus={this.onEditing} type="text" defaultValue={name} />)}
-        {editing && (<Select.Async className={styles.select}
+        {editing && (<Select.Async className={` ${styles.select} ${styles.selectCitys}`}
             value={endpoint}
             loadOptions={getOptions}
             onChange={this.onChange}
             labelKey="name"
             valueKey="l"
+            onBlur={this.onEditing}
             // onValueClick={this.getForecast}
           />
         )}
@@ -124,7 +121,6 @@ export class City extends React.Component { // eslint-disable-line react/prefer-
 
     );
   }
-
 };
 
 City.propTypes = {

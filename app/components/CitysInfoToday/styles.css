@@ -10,11 +10,13 @@
   color: #81888C;
   float: left;
   margin-right: 20px;
+  text-align: center;
 }
 
 .infoBoardTemp {
   font-size: 60px;
   line-height: 50px;
+  min-height: 50px;
 }
 
 .infoBoardMinHig {

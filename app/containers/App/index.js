@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 import styles from './styles.css';
 import createSagaMiddleware from 'redux-saga';
 
-
 import VisibledCitys  from 'containers/VisibledCitys';
-
 
 class App extends Component {
 

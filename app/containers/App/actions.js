@@ -61,7 +61,6 @@ export function fetchedCityForescast({ i, forecast } ) {
  * @return {object} An action object with a type of FETCH_CONDICTION_SUCCESS
  */
 export function fetchedCityCondition({ i, conditions } ) {
-  console.log('---', FETCH_CONDICTION_SUCCESS, i, conditions);
   return {
     type: FETCH_CONDICTION_SUCCESS,
     i,
