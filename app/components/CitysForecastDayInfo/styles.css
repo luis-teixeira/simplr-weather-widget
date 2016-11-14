@@ -1,0 +1,14 @@
+.info {
+  width: 33.33%;
+  float: left;
+}
+
+.temp,
+.minHigh {
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.icon {
+  font-size: 20px;
+}

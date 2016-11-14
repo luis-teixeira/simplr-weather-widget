@@ -1,0 +1,30 @@
+.noForecast {
+  margin-top: 10px;
+  position: relative;
+}
+
+.search {
+  float: left;
+  padding-left: 20px;
+}
+
+.or {
+  position: absolute;
+  top: 107px;
+  width: 100%;
+  text-align: center;
+}
+
+.geoip {
+  
+  text-align: right;
+  padding-right: 20px;
+  position: absolute;
+  right: 0;
+}
+
+.geoip img {
+  padding-right: 14px;
+}
+
+@media (max-width: 979px) {}

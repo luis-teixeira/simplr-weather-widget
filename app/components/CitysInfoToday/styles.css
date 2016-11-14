@@ -1,0 +1,40 @@
+.infoToday {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+/* Left Col */
+
+.infoBoard {
+  color: #81888C;
+  float: left;
+  margin-right: 20px;
+}
+
+.infoBoardTemp {
+  font-size: 60px;
+  line-height: 50px;
+}
+
+.infoBoardMinHig {
+  font-size: 17px;
+}
+
+/* Right Col */
+
+.infoBoardExtra {
+  text-align: center;
+  float: left;
+  margin-left: 20px;
+}
+
+.infoBoardExtraIcon {
+  color: #81888C;
+  font-size: 60px;
+  line-height: 50px;
+}
+
+.infoBoardExtraClock {
+  font-size: 17px;
+}
