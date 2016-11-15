@@ -1,12 +1,12 @@
 {
-  "name": "weather-widget-V2",
+  "name": "simplr-weather-widget",
   "version": "0.1.0",
-  "description": "Weather Widget V2",
+  "description": "Simplr Weather Widget",
   "author": "Luis Teixeira",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/luis-teixeira/simplr"
+    "url": "git://github.com/luis-teixeira/simplr-weather-widget"
   },
   "keywords": [
     "react",
@@ -18,7 +18,6 @@
   "engines": {
     "npm": ">=3"
   },
-  "private": true,
   "devDependencies": {
     "babel-core": "^6.18.2",
     "babel-loader": "^6.2.7",
