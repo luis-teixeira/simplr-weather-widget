@@ -19,7 +19,7 @@ const CitysInfoToday = ( props ) => {
     <div>
       <div className={`${styles.infoToday} weather-widget--today`} >
         <div className={`${styles.infoBoard} weather-widget--today--info`} >
-          <div className={`${styles.infoBoardTemp} weather-widget--today--temp`} > <TempRound temp={temp_c} /></div>
+          <div className={`${styles.infoBoardTemp} weather-widget--today--temp`} > {temp_c && <TempRound temp={temp_c} /> }</div>
           <div className={`${styles.infoBoardMinHig} weather-widget--today--min-high`} >
             <HighRound {...high} />/<strong><MinRound {...low} /></strong>
           </div>

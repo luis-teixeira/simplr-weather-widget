@@ -1,30 +1,6 @@
-### CREATED USING -> Simplr 
+### Simplr Weather Widget
 
-React Simplr is a React StartKit with Redux and Redux-Saga
-
-## Folder Structure
-
-```
-my-app/
-  README.md
-  node_modules/
-  package.json
-  public/
-    index.html
-    favicon.ico
-  app/
-    /App
-      actions
-      constants
-      index
-      reducer
-      sagas  
-      styles.css
-    /HomePage
-      styles.css
-      index.js
-      ...
-```
+React Simplr Weather Widget and Wunderground API
 
 * `src/index.js` is the JavaScript entry point.
 

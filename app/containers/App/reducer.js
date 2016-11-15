@@ -14,7 +14,7 @@ export const citySchema = new Record({
   name: null,
   endpoint:null,
   loaded: false,
-  geoip: true,
+  geoip: false,
   editing: true,
   forecast: null,
   conditions: null
@@ -26,6 +26,7 @@ const initialState = fromJS({
     id: '0',
     geoip: false,
     loaded: false,
+    geoip: true,
   })]
 });
 

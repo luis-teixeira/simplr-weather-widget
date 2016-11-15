@@ -49,25 +49,26 @@ const getForecast = (endpoint) => {
     });
 };
 
+const getGeoIp = () => {
+  return fetch(`http://api.wunderground.com/api/0ad35cadfb241898/geolookup/q/autoip.json`)
+    .then((response) => {
+      return response.json();
+    }).then((json) => {
+      return { ...json };
+    });
+};
+
 export class City extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
-
   onChange = (value) => {
+    this.fetchAllData(value);
+  }
 
-    this.props.onFetched({i: this.props.index, name: value.name, endpoint: value.l });
-    getConditions(value.l)
-      .then( json => {
-        this.props.onFetchedCondition({i:this.props.index, conditions:json.current_observation})
-      })
-      .then(getForecast(value.l)
-      .then(json => {
-        this.props.onFetchedForecast({i:this.props.index, forecast:json})
-      })
-    )
-
-    // getForecast(value.l).then( json => {
-    //   this.props.onFetchedForecast({i:this.props.index, wunderground:json})
-    // });
+  onGeoIp = () => {
+    //this.
+    getGeoIp().then( json => {
+      this.fetchAllData({l:json.location.l, name: json.location.city+', '+ json.location.country_name});
+    });
   }
 
   onClickDelete = () => (
@@ -78,12 +79,41 @@ export class City extends React.Component { // eslint-disable-line react/prefer-
     this.props.onEditing({ i: this.props.index, editing: !this.props.editing });
   }
 
+  fetchAllData = (value) => {
+
+    let c = {};
+    let f = {};
+
+    this.props.onFetched({i: this.props.index, name: value.name, endpoint: value.l });
+    getConditions(value.l)
+      .then( json => {
+        // console.log('c', json);
+        c = json.current_observation;
+        //this.props.onFetchedCondition({i:this.props.index, conditions:json.current_observation})
+      })
+      .then(getForecast(value.l)
+      .then(json => {
+        // console.log('f', json);
+        f = json;
+        // this.props.onFetchedForecast({i:this.props.index, forecast:json})
+      })
+      .then(()=> {
+        this.props.onFetchedCondition({i:this.props.index, conditions:c})
+        this.props.onFetchedForecast({i:this.props.index, forecast:f})
+      })
+    )
+  }
+
+  componentDidMount(){
+    if(this.props.geoip) { this.onGeoIp() };
+  }
+
   render() {
     const {index, id, name, loaded, geoip, forecast, conditions, editing, endpoint } = this.props;
 
     let mainContent = (!loaded && !forecast) ? (<NoForecast />) : (<Loading />);
 
-    if( forecast ) {
+    if( forecast && conditions) {
       // const simpleforecast = (simpleforecast) ? forecast.forecast.simpleforecast : '';
       mainContent = (
         <div>
@@ -108,7 +138,7 @@ export class City extends React.Component { // eslint-disable-line react/prefer-
         )}
 
         {editing && (
-          <button className={`${styles.btnClose} ${styles.btnGeoip} btn-geoip--city`} >
+          <button onClick={this.onGeoIp} className={`${styles.btnClose} ${styles.btnGeoip} btn-geoip--city`} >
             <img src={local}  alt="geoip" />
           </button>
         )}
@@ -138,6 +168,7 @@ City.propTypes = {
   onFetched: React.PropTypes.func,
   onFetchedForecast: React.PropTypes.func,
   onFetchedCondition: React.PropTypes.func,
+  onGeoIp: React.PropTypes.func,
 };
 
 function mapDispatchToProps(dispatch, ownProps) {
