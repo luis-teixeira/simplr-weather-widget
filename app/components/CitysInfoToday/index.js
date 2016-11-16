@@ -18,9 +18,8 @@ export const TempRound = (props) =>( props.temp && <span>{Math.round(props.temp)
 const CitysInfoToday = ( props ) => {
   const {  high, low, weather, icon} = props;
   let { temp_c } = props;
-  console.log(props);
-
-  const wrapIcon = (<SimplrWeatherIcons css={styles.icon} name={icon}/> );
+  const forecast = props.forecast.simpleforecast.forecastday[0];
+  const wrapIcon = (icon) ? (<SimplrWeatherIcons css={styles.icon} name={icon}/> ) : (<div></div>);
 
   return(
     <div>
@@ -28,7 +27,7 @@ const CitysInfoToday = ( props ) => {
         <div className={`${styles.infoBoard} weather-widget--today--info`} >
           <div className={`${styles.infoBoardTemp} weather-widget--today--temp`} > <TempRound temp={temp_c} /> </div>
           <div className={`${styles.infoBoardMinHig} weather-widget--today--min-high`} >
-            {/* <strong><HighRound  {...high} />/<MinRound {...low} /></strong> */}
+            <strong><HighRound  {...forecast.high} />/<MinRound {...forecast.low} /></strong>
           </div>
         </div>
         <div className={`${styles.infoBoardExtra} weather-widget--icon`} >

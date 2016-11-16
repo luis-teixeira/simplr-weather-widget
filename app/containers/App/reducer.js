@@ -21,6 +21,7 @@ export const citySchema = new Record({
   forecast: null,
   conditions: null,
   error: false,
+  cached: false,
 });
 
 // The initial state of the App
@@ -30,6 +31,7 @@ const initialState = fromJS({
     geoip: false,
     loaded: false,
     geoip: true,
+    cached: false,
   })]
 });
 
@@ -49,6 +51,8 @@ function appReducer(state = initialState, action) {
         .setIn(['citys', action.i, 'endpoint'], action.endpoint)
         .setIn(['citys', action.i, 'editing'], false)
         .setIn(['citys', action.i, 'loaded'], true)
+        .setIn(['citys', action.i, 'cached'], true)
+        .setIn(['citys', action.i, 'geoip'], false)
     case FETCH_FORESCAST_SUCCESS:
       return state
         .setIn(['citys', action.i, 'forecast'], action.forecast)
@@ -65,12 +69,15 @@ function appReducer(state = initialState, action) {
       return state
         .setIn(['citys', action.i, 'error'], true)
         .setIn(['citys', action.i, 'loaded'], true)
-        .setIn(['citys', action.i, 'conditions'], null);
+        .setIn(['citys', action.i, 'conditions'], null)
+        .setIn(['citys', action.i, 'forecast'], null);
     case ERROR_F:
       return state
         .setIn(['citys', action.i, 'error'], true)
         .setIn(['citys', action.i, 'loaded'], true)
-        .setIn(['citys', action.i, 'forecast'], null);
+        .setIn(['citys', action.i, 'forecast'], null)
+        .setIn(['citys', action.i, 'conditions'], null);
+
     default:
       return state;
   }

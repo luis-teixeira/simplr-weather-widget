@@ -13,7 +13,7 @@ import App from 'containers/App';
 // import { appData } from 'containers/App/sagas';
 
 const initialState = {};
-const persistedState = {}; // loadState();
+const persistedState = loadState();
 
 const store = configureStore(persistedState);
 

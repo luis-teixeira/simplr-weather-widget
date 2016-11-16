@@ -32,6 +32,8 @@ import compass from './compass.svg';
 import celcius from './celcius.svg';
 import fahrenheit from './fahrenheit.svg';
 
+import fallback from './fallback.png';
+
 const icon = (name) => {
   if(name === 'chanceflurries') return chanceflurries;
   if(name === 'chancerain') return chancerain;
@@ -66,9 +68,11 @@ const icon = (name) => {
 function SimplrWeatherIcons(props) {
   const { name, css } = props;
   return (
-    <span key={name} >
-      <ReactSVG path={icon(name)} className={css} />
-    </span>
+    <ReactSVG
+      path={icon(name)}
+      className={css}
+      evalScript={'once'}
+      fallbackPath={fallback} />
   );
 }
 

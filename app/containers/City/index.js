@@ -14,6 +14,13 @@ import NoForecast from 'components/NoForecast';
 import Loading from 'components/Loading';
 
 import {
+  getOptions,
+  getConditions,
+  getForecast,
+  getGeoIp,
+} from 'api/Wunderground';
+
+import {
   removeCity,
   editingCity,
   fetchedCity,
@@ -23,42 +30,7 @@ import {
   errorF,
 } from 'containers/App/actions';
 
-const getOptions = (input) => {
-  //http://autocomplete.wunderground.com/aq?query=
-  return fetch(`http://autocomplete.wunderground.com/aq?query=${input}`)
-    .then((response) => {
-      return response.json();
-    }).then((json) => {
-      return { options: json.RESULTS };
-    });
-};
 
-const getConditions = (endpoint) => {
-  return fetch(`http://api.wunderground.com/api/0ad35cadfb241898/conditions${endpoint}.json`)
-    .then((response) => {
-      return response.json();
-    }).then((json) => {
-      return { ...json };
-    });
-};
-
-const getForecast = (endpoint) => {
-  return fetch(`http://api.wunderground.com/api/0ad35cadfb241898/forecast${endpoint}.json`)
-    .then((response) => {
-      return response.json();
-    }).then((json) => {
-      return { ...json };
-    });
-};
-
-const getGeoIp = () => {
-  return fetch(`http://api.wunderground.com/api/0ad35cadfb241898/geolookup/q/autoip.json`)
-    .then((response) => {
-      return response.json();
-    }).then((json) => {
-      return { ...json };
-    });
-};
 
 export class City extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -72,7 +44,9 @@ export class City extends React.Component { // eslint-disable-line react/prefer-
         this.fetchAllData({l:json.location.l, name: json.location.city+', '+ json.location.country_name});
       } else {
         // this.props.onErrorF(this.props.index);
-        alert('error');
+        this.props.onErrorC(index);
+        console.log( json.response.error.description );
+        alert('error fetching geiIP! Try Again please :( ' + json.response.error.description);
       }
     });
   }
@@ -90,26 +64,33 @@ export class City extends React.Component { // eslint-disable-line react/prefer-
     this.props.onFetched({i: this.props.index, name: value.name, endpoint: value.l });
 
     getConditions(value.l).then( json => {
+        const { index } = this.props;
+      //console.log('c ', json );
         if(!json.response.error) {
-          this.props.onFetchedCondition({i:this.props.index, conditions:json.current_observation})
+          this.props.onFetchedCondition({i:index, conditions:json.current_observation})
         } else {
-          this.props.onErrorC(this.props.index);
-          alert('error c');
+          this.props.onErrorC(index);
+          console.log( json.response.error.description );
+          alert('error fetching conditions! Try Again please :( ' + json.response.error.description);
         }
-    })
+    }).then(getForecast(value.l).then(json => {
+        const { index } = this.props;
 
-    getForecast(value.l).then(json => {
         if(!json.response.error) {
-          this.props.onFetchedForecast({i:this.props.index, forecast:json})
+          this.props.onFetchedForecast({i:index, forecast:json})
         } else {
-          this.props.onErrorF(this.props.index);
-          alert('error f');
+          this.props.onErrorF(index);
+          console.log( json.response.error.description );
+          alert('error fetching forecast! Try Again please :( ' + json.response.error.description);
         }
-    })
+    }))
   }
 
+
   componentDidMount(){
-    if(this.props.geoip) { this.onGeoIp() };
+    const { geoip, cached, name } = this.props;
+    if(geoip) { this.onGeoIp() };
+    if(cached) { this.fetchAllData(this.props) };
   }
 
   render() {
@@ -119,7 +100,6 @@ export class City extends React.Component { // eslint-disable-line react/prefer-
     let auxContente = (forecast) ? (<CitysForecast forescast={forecast.forecast.simpleforecast.forecastday} />) : (<div></div>);
 
     if( forecast && conditions) {
-      console.log(conditions, forescat);
       mainContent = (<CitysInfoToday  {...forecast} {...conditions} />);
     }
 
