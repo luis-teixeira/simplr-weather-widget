@@ -40,7 +40,7 @@ const initialState = fromJS({
 // });
 
 function appReducer(state = initialState, action) {
-  // console.log(action);
+  console.log(action);
   switch (action.type) {
     case ADD_CITY:
       return state

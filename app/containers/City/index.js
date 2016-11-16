@@ -88,9 +88,9 @@ export class City extends React.Component { // eslint-disable-line react/prefer-
 
 
   componentDidMount(){
-    const { geoip, cached, name } = this.props;
+    const { geoip, cached, name, endpoint } = this.props;
     if(geoip) { this.onGeoIp() };
-    if(cached) { this.fetchAllData(this.props) };
+    if(cached) { this.fetchAllData( {name: name, l: endpoint}) };
   }
 
   render() {
