@@ -11,12 +11,14 @@
   float: left;
   margin-right: 20px;
   text-align: center;
+
 }
 
 .infoBoardTemp {
   font-size: 60px;
   line-height: 50px;
   min-height: 50px;
+  position: relative;
 }
 
 .infoBoardMinHig {
@@ -29,14 +31,49 @@
   text-align: center;
   float: left;
   margin-left: 20px;
+  width: 100px;
 }
 
 .infoBoardExtraIcon {
   color: #81888C;
   font-size: 60px;
   line-height: 50px;
+  position: relative;
 }
 
 .infoBoardExtraClock {
   font-size: 17px;
+}
+
+.icon{
+  fill: #81888C;
+  width: 170px;
+  height: 170px;
+  position: absolute;
+  top: -55px;
+  left: -25px;
+}
+
+.celciusMin {
+  fill:#81888C;
+  display: none;
+}
+
+.celciusTemp {
+  fill:#81888C;
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  top: -25px;
+  left: 70%;
+}
+
+.tempSmallHight {
+  position: relative;
+  color: #de5c5c;
+}
+
+.tempSmallMin {
+  position: relative;
+  color: #14a8ce;
 }

@@ -5,6 +5,8 @@ import {
   EDITING_CITY,
   FETCH_FORESCAST_SUCCESS,
   FETCH_CONDICTION_SUCCESS,
+  ERROR_C,
+  ERROR_F,
 } from './constants';
 
 import { fromJS, Map, Record } from 'immutable';
@@ -17,7 +19,8 @@ export const citySchema = new Record({
   geoip: false,
   editing: true,
   forecast: null,
-  conditions: null
+  conditions: null,
+  error: false,
 });
 
 // The initial state of the App
@@ -58,6 +61,16 @@ function appReducer(state = initialState, action) {
     case REMOVE_CITY:
       return state
         .set('citys', state.get('citys').filter( city => city.get('id') !==  action.id ));
+    case ERROR_C:
+      return state
+        .setIn(['citys', action.i, 'error'], true)
+        .setIn(['citys', action.i, 'loaded'], true)
+        .setIn(['citys', action.i, 'conditions'], null);
+    case ERROR_F:
+      return state
+        .setIn(['citys', action.i, 'error'], true)
+        .setIn(['citys', action.i, 'loaded'], true)
+        .setIn(['citys', action.i, 'forecast'], null);
     default:
       return state;
   }

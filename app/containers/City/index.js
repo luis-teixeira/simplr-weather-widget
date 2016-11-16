@@ -18,7 +18,9 @@ import {
   editingCity,
   fetchedCity,
   fetchedCityForescast,
-  fetchedCityCondition
+  fetchedCityCondition,
+  errorC,
+  errorF,
 } from 'containers/App/actions';
 
 const getOptions = (input) => {
@@ -65,9 +67,13 @@ export class City extends React.Component { // eslint-disable-line react/prefer-
   }
 
   onGeoIp = () => {
-    //this.
     getGeoIp().then( json => {
-      this.fetchAllData({l:json.location.l, name: json.location.city+', '+ json.location.country_name});
+      if(!json.response.error) {
+        this.fetchAllData({l:json.location.l, name: json.location.city+', '+ json.location.country_name});
+      } else {
+        // this.props.onErrorF(this.props.index);
+        alert('error');
+      }
     });
   }
 
@@ -81,27 +87,25 @@ export class City extends React.Component { // eslint-disable-line react/prefer-
 
   fetchAllData = (value) => {
 
-    let c = {};
-    let f = {};
-
     this.props.onFetched({i: this.props.index, name: value.name, endpoint: value.l });
-    getConditions(value.l)
-      .then( json => {
-        // console.log('c', json);
-        c = json.current_observation;
-        //this.props.onFetchedCondition({i:this.props.index, conditions:json.current_observation})
-      })
-      .then(getForecast(value.l)
-      .then(json => {
-        // console.log('f', json);
-        f = json;
-        // this.props.onFetchedForecast({i:this.props.index, forecast:json})
-      })
-      .then(()=> {
-        this.props.onFetchedCondition({i:this.props.index, conditions:c})
-        this.props.onFetchedForecast({i:this.props.index, forecast:f})
-      })
-    )
+
+    getConditions(value.l).then( json => {
+        if(!json.response.error) {
+          this.props.onFetchedCondition({i:this.props.index, conditions:json.current_observation})
+        } else {
+          this.props.onErrorC(this.props.index);
+          alert('error c');
+        }
+    })
+
+    getForecast(value.l).then(json => {
+        if(!json.response.error) {
+          this.props.onFetchedForecast({i:this.props.index, forecast:json})
+        } else {
+          this.props.onErrorF(this.props.index);
+          alert('error f');
+        }
+    })
   }
 
   componentDidMount(){
@@ -111,16 +115,12 @@ export class City extends React.Component { // eslint-disable-line react/prefer-
   render() {
     const {index, id, name, loaded, geoip, forecast, conditions, editing, endpoint } = this.props;
 
-    let mainContent = (!loaded && !forecast) ? (<NoForecast />) : (<Loading />);
+    let mainContent = (!forecast && !conditions) ? (<NoForecast />) : (<Loading />);
+    let auxContente = (forecast) ? (<CitysForecast forescast={forecast.forecast.simpleforecast.forecastday} />) : (<div></div>);
 
     if( forecast && conditions) {
-      // const simpleforecast = (simpleforecast) ? forecast.forecast.simpleforecast : '';
-      mainContent = (
-        <div>
-          <CitysInfoToday  {...forecast.forecast.simpleforecast.forecastday[0]} {...conditions} />
-          <CitysForecast forescast={forecast.forecast.simpleforecast.forecastday} />
-        </div>
-      );
+      console.log(conditions, forescat);
+      mainContent = (<CitysInfoToday  {...forecast} {...conditions} />);
     }
 
     return(
@@ -146,7 +146,9 @@ export class City extends React.Component { // eslint-disable-line react/prefer-
         <button onClick={this.onClickDelete} className={`${styles.btnClose} btn-delete--city`} >
           <img src={remove}  alt="remove more" />
         </button>
+
         {mainContent}
+        {auxContente}
       </div>
 
     );
@@ -169,6 +171,7 @@ City.propTypes = {
   onFetchedForecast: React.PropTypes.func,
   onFetchedCondition: React.PropTypes.func,
   onGeoIp: React.PropTypes.func,
+  onError: React.PropTypes.func,
 };
 
 function mapDispatchToProps(dispatch, ownProps) {
@@ -178,6 +181,9 @@ function mapDispatchToProps(dispatch, ownProps) {
     onFetched: ({i, name, endpoint }) => dispatch(fetchedCity({i, name, endpoint })),
     onFetchedForecast: ({i, forecast}) => dispatch(fetchedCityForescast({i, forecast})),
     onFetchedCondition: ({i, conditions}) => dispatch(fetchedCityCondition({i, conditions})),
+    onErrorC: (i) => dispatch(errorC(i)),
+    onErrorF: (i) => dispatch(errorF(i)),
+
     dispatch,
   };
 }

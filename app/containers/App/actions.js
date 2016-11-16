@@ -5,6 +5,8 @@ import {
   EDITING_CITY,
   FETCH_FORESCAST_SUCCESS,
   FETCH_CONDICTION_SUCCESS,
+  ERROR_C,
+  ERROR_F,
 } from './constants';
 
 // succinct hack for generating passable unique ids
@@ -79,5 +81,27 @@ export function editingCity({ i, editing } ) {
     type: EDITING_CITY,
     i,
     editing,
+  };
+}
+
+/**
+ * @param  {id} id for a card created
+ * @return {object} An action object with a type of EDITING_CITY
+ */
+export function errorC({ i }) {
+  return {
+    type: ERROR_C,
+    i,
+  };
+}
+
+/**
+ * @param  {id} id for a card created
+ * @return {object} An action object with a type of EDITING_CITY
+ */
+export function errorF({ i }) {
+  return {
+    type: ERROR_F,
+    i,
   };
 }

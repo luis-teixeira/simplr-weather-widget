@@ -1,11 +1,12 @@
 import React from 'react';
 import styles from './styles.css';
+import SimplrWeatherIcons from '../../SimplrWeatherIcons';
 
 export const HighRound = (props) => ( <span>{Math.round(props.celsius)}º</span> );
 export const MinRound = (props) => ( <span>{Math.round(props.celsius)}º</span> );
 
 const CitysForecastDayInfo = ( props ) => {
-  const { high, low, date, conditions } = props;
+  const { high, low, date, conditions, icon } = props;
 
   // const highRound = Math.round(high.celsius);
   const lowRound = Math.round(low.celsius);
@@ -14,7 +15,7 @@ const CitysForecastDayInfo = ( props ) => {
   return(
     <div className={`${styles.info} weather-widget--forecast--info`} >
       <div className={`${styles.temp} weather-widget--forescast--temp`} > {date.day} {date.monthname_short} </div>
-      <div className={`${styles.icon} weather-widget--forescast--icon-font`} > 24º </div>
+      <div className={`${styles.icon} weather-widget--forescast--icon-font`} > <SimplrWeatherIcons css={styles.iconSVG} name={icon}/> </div>
       <div className={`${styles.minHigh} weather-widget--forescast--min-high`} > <strong><HighRound {...high} /></strong>/<MinRound {...low} /></div>
       {/* <div className={`${styles.minHigh} weather-widget--forescast--min-high`} > {conditions} </div> */}
     </div>

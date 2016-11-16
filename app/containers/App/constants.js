@@ -5,4 +5,5 @@ export const FETCHED_CITY = 'app/App/FETCHED_CITY';
 export const FETCH_FORESCAST = 'app/App/FETCH_FORESCAST';
 export const FETCH_FORESCAST_SUCCESS = 'app/App/FETCH_FORESCAST_SUCCESS';
 export const FETCH_CONDICTION_SUCCESS = 'app/App/FETCH_CONDICTION_SUCCESS';
-export const ERROR = 'app/App/ERROR';
+export const ERROR_C = 'app/App/ERROR_C';
+export const ERROR_F = 'app/App/ERROR_F';
