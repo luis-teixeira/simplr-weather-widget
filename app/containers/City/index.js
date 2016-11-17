@@ -46,7 +46,7 @@ export class City extends React.Component { // eslint-disable-line react/prefer-
         // this.props.onErrorF(this.props.index);
         this.props.onErrorC(index);
         console.log( json.response.error.description );
-        alert('error fetching geiIP! Try Again please :( ' + json.response.error.description);
+        alert('error fetching geiIP! I have reached the wunderground API Call Limit :( ' + json.response.error.description);
       }
     });
   }
@@ -71,7 +71,7 @@ export class City extends React.Component { // eslint-disable-line react/prefer-
         } else {
           this.props.onErrorC(index);
           console.log( json.response.error.description );
-          alert('error fetching conditions! Try Again please :( ' + json.response.error.description);
+          alert('error fetching conditions! I have reached the wunderground API Call Limit :( ' + json.response.error.description);
         }
     }).then(getForecast(value.l).then(json => {
         const { index } = this.props;
@@ -81,7 +81,7 @@ export class City extends React.Component { // eslint-disable-line react/prefer-
         } else {
           this.props.onErrorF(index);
           console.log( json.response.error.description );
-          alert('error fetching forecast! Try Again please :( ' + json.response.error.description);
+          alert('error fetching forecast! I have reached the wunderground API Call Limit :( ' + json.response.error.description);
         }
     }))
   }
