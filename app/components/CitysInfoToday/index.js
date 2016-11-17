@@ -19,7 +19,7 @@ const CitysInfoToday = ( props ) => {
   const {  high, low, weather, icon} = props;
   let { temp_c } = props;
   const forecast = props.forecast.simpleforecast.forecastday[0];
-  const wrapIcon = (icon) ? (<SimplrWeatherIcons css={styles.icon} name={icon}/> ) : (<div></div>);
+  let wrapIcon = (icon) ? (<SimplrWeatherIcons key={Math.random()} css={styles.icon} name={icon}/> ) : (<div></div>);
 
   return(
     <div>

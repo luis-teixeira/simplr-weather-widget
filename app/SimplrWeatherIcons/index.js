@@ -65,15 +65,50 @@ const icon = (name) => {
 
 };
 
-function SimplrWeatherIcons(props) {
-  const { name, css } = props;
-  return (
-    <ReactSVG
-      path={icon(name)}
-      className={css}
-      evalScript={'once'}
-      fallbackPath={fallback} />
-  );
+// function SimplrWeatherIcons(props) {
+//   const { name, css } = props;
+//   return (
+//     <div>
+//       <ReactSVG
+//         path={icon(name)}
+//         className={css}
+//         evalScript={'always'}
+//         fallbackPath={fallback} />
+//
+//     </div>
+//   );
+// }
+export class SimplrWeatherIcons extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      key: Math.random()
+    };
+  }
+  componentDidMount() {
+    // this.setState({ key: Math.random() });
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if(nextProps.name !== this.props.name){
+      this.setState({ key: Math.random() });
+      return true;
+    }
+    return false;
+  }
+
+  render() {
+    const { name, css } = this.props;
+    return (
+      <span key={this.state.key}>
+      <ReactSVG
+        path={icon(name)}
+        className={css}
+        evalScript={'always'}
+        fallbackPath={fallback} />
+      </span>
+    );
+  }
 }
 
 export default SimplrWeatherIcons;

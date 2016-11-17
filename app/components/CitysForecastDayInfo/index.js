@@ -15,7 +15,7 @@ const CitysForecastDayInfo = ( props ) => {
   return(
     <div className={`${styles.info} weather-widget--forecast--info`} >
       <div className={`${styles.temp} weather-widget--forescast--temp`} > {date.day} {date.monthname_short} </div>
-      <div className={`${styles.icon} weather-widget--forescast--icon-font`} > <SimplrWeatherIcons css={styles.iconSVG} name={icon}/> </div>
+      <div className={`${styles.icon} weather-widget--forescast--icon-font`} > <SimplrWeatherIcons key={Math.random()} css={styles.iconSVG} name={icon}/> </div>
       <div className={`${styles.minHigh} weather-widget--forescast--min-high`} > <strong><HighRound {...high} /></strong>/<MinRound {...low} /></div>
       {/* <div className={`${styles.minHigh} weather-widget--forescast--min-high`} > {conditions} </div> */}
     </div>
